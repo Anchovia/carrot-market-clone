@@ -1,5 +1,6 @@
 import ProductList from "@/components/product-list";
 import db from "@/lib/db";
+import Link from "next/link";
 
 async function getInitialProducts() {
     const products = await db.product.findMany({
@@ -12,7 +13,7 @@ async function getInitialProducts() {
         },
         take: 1,
         orderBy: {
-            created_at: "desc",
+            id: "desc",
         },
     });
     return products;
@@ -24,6 +25,12 @@ export default async function Products() {
     return (
         <div>
             <ProductList initialProducts={initialProducts} />
+            <Link
+                href="/products/add"
+                className="bg-orange-500 flex items-center justify-center rounded-full size-16 fixed bottom-24 right-8 text-white transition-colors hover:bg-orange-400"
+            >
+                <div className="size-10 bg-neutral-500 rounded-full" />
+            </Link>
         </div>
     );
 }
