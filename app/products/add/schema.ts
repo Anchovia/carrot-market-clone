@@ -14,3 +14,5 @@ export const productSchema = z.object({
         required_error: "가격은 필수입니다.",
     }),
 });
+
+export type ProductType = z.infer<typeof productSchema>;

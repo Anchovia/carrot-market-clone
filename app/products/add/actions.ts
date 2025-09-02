@@ -5,7 +5,7 @@ import getSession from "@/lib/session";
 import { redirect } from "next/navigation";
 import { productSchema } from "./schema";
 
-export async function uploadProduct(_: any, formdata: FormData) {
+export async function uploadProduct(formdata: FormData) {
     const data = {
         title: formdata.get("title"),
         photo: formdata.get("photo"),
