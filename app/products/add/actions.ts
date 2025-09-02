@@ -3,22 +3,7 @@
 import db from "@/lib/db";
 import getSession from "@/lib/session";
 import { redirect } from "next/navigation";
-import z from "zod";
-
-const productSchema = z.object({
-    photo: z.string({
-        required_error: "사진은 필수입니다.",
-    }),
-    title: z.string({
-        required_error: "제목은 필수입니다.",
-    }),
-    description: z.string({
-        required_error: "설명은 필수입니다.",
-    }),
-    price: z.coerce.number({
-        required_error: "가격은 필수입니다.",
-    }),
-});
+import { productSchema } from "./schema";
 
 export async function uploadProduct(_: any, formdata: FormData) {
     const data = {
@@ -57,11 +42,11 @@ export async function uploadProduct(_: any, formdata: FormData) {
 
 export async function getUploadUrl() {
     const response = await fetch(
-        `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFARE_ACCOUNT_ID}/images/v2/direct_upload`,
+        `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v2/direct_upload`,
         {
             method: "POST",
             headers: {
-                Authorization: `Bearer ${process.env.CLOUDFARE_API_KEY}`,
+                Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
             },
         }
     );

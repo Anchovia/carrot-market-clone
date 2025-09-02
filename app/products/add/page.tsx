@@ -9,6 +9,7 @@ import { getUploadUrl, uploadProduct } from "./actions";
 export default function AddProduct() {
     const [preview, setPreview] = useState("");
     const [uploadUrl, setUploadUrl] = useState("");
+    const [photoId, setPhotoId] = useState("");
 
     // 이미지만 업로드 했는지 확인 필요
     // 파일 최대 사이즈 제한 필요(3 ~ 4mb)
@@ -29,10 +30,31 @@ export default function AddProduct() {
         if (success) {
             const { id, uploadURL } = result;
             setUploadUrl(uploadURL);
+            setPhotoId(id);
         }
     };
 
-    const [state, action] = useFormState(uploadProduct, null);
+    const interceptAction = async (_: any, formData: FormData) => {
+        const file = formData.get("photo");
+        if (!file) {
+            return;
+        }
+        const cloudflareForm = new FormData();
+        cloudflareForm.append("file", file);
+        const response = await fetch(uploadUrl, {
+            method: "POST",
+            body: cloudflareForm,
+        });
+        if (response.status !== 200) {
+            return;
+        }
+        const photoUrl = `https://imagedelivery.net/zAwkQO6bEReNpmM7QzHHXA/${photoId}`;
+        formData.set("photo", photoUrl);
+
+        return uploadProduct(_, formData);
+    };
+
+    const [state, action] = useFormState(interceptAction, null);
 
     return (
         <div>
