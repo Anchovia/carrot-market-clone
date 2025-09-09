@@ -19,6 +19,10 @@ async function getInitialProducts() {
     return products;
 }
 
+export const metadata = {
+    title: "Home",
+};
+
 export default async function Products() {
     const initialProducts = await getInitialProducts();
 

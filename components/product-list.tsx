@@ -1,6 +1,6 @@
 "use client";
 
-import { getMoreProducts } from "@/app/(tabs)/products/actions";
+import { getMoreProducts } from "@/app/(tabs)/home/actions";
 import { useEffect, useRef, useState } from "react";
 import ListProduct from "./list-product";
 

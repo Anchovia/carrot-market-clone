@@ -29,6 +29,12 @@ async function getProduct(id: number) {
     return product;
 }
 
+export async function generateMetadata() {
+    return {
+        title: "Product Detail",
+    };
+}
+
 export default async function ProductDetail({
     params,
 }: {
