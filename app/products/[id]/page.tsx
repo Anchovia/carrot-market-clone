@@ -29,9 +29,10 @@ async function getProduct(id: number) {
     return product;
 }
 
-export async function generateMetadata() {
+export async function generateMetadata({ params }: { params: { id: string } }) {
+    const product = await getProduct(Number(params.id));
     return {
-        title: "Product Detail",
+        title: product?.title,
     };
 }
 
